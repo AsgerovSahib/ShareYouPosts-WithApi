@@ -31,43 +31,84 @@ async function renderPosts() {
       return `
     <div class="card shadow">
     <img
-      style="height: 300px; object-fit: cover"
-      src="./image/download.png"
+      src="https://media.sproutsocial.com/uploads/2017/01/Instagram-Post-Ideas.png"
       class="card-img-top"
+      style="object-fit: cover"
+      height="300"
       alt="${post.title}"
     />
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <h6 class="card-subtitle mb-2 text-muted">11.00 12.12.2024</h6>
+      <h5 class="card-title">${post.title}</h5>
       <p class="card-text">
-        Some quick example text to build on the card title and make up the
-        bulk of the card's content.
+      ${post.body}
       </p>
-
+      <h6 class="card-subtitle mt-4 mb-3 text-muted">${createdTime}</h6>
       <div class="d-flex align-items-center gap-2">
         <img
           class="rounded-circle shadow"
           width="50"
-          height="50 "
+          height="50"
           style="object-fit: cover"
           src="${
             post.avatar
               ? post.avatar
-              : "https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
+              : "https://img.myloview.com/stickers/default-avatar-profile-icon-vector-social-media-user-image-700-205124837.jpg"
           }"
-          alt=""
         />
-        <p class="h6">${post.fullname ? post.fullname : "anonim"}</p>
+        <p class="h6">${
+          post.fullname ? post.fullname : "Anonim"
+        }</p> <button class="btn btn-danger remove-btn" value="${
+        post.id
+      }">DEL </button>
       </div>
-    </div> 
-  </div>`;
+    </div>
+  </div>
+    `;
     });
-    postsEl.html();
 
-    // const data = await response.json();
+    postsEl.html(content);
   } catch (err) {
     console.log("err", err);
-    alert("Network error");
+
+    console.log("Network error");
   }
 }
-renderPost();
+
+$(document).on("click", "#shareBtn", async function () {
+  try {
+    const title = $("#postInput").val().trim();
+    const body = $("#postBodyInput").val().trim();
+
+    const newPostData = {
+      title,
+      body,
+      fullname,
+      avatar,
+      created: new Date(),
+    };
+
+    console.log("newPostData", newPostData);
+
+    await addPost(newPostData);
+
+    renderPosts();
+
+    $("#postInput").val("");
+    $("#postBodyInput").val("");
+  } catch (err) {
+    console.log("er", err);
+  }
+});
+
+$(document).on("click", ".remove-btn", async function () {
+  try {
+    const id = $(this).val();
+    console.log("id", id);
+
+    await rmvPost(id);
+
+    renderPosts();
+  } catch (err) {}
+});
+
+work();
