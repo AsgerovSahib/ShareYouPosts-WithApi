@@ -9,7 +9,13 @@ const baseUrl = "https://blog-api-t6u0.onrender.com";
 //*for read post ------------------
 const getPosts = async () => {
   try {
-    const response = await fetch(baseUrl + "/posts", { method: "GET" });
+    const response = await fetch(baseUrl + "/posts", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+
     const data = await response.json();
     return data;
   } catch (err) {
@@ -48,9 +54,11 @@ const uptPost = async (id, form) => {
       },
       body: JSON.stringify(form),
     });
+
     const data = await response.json();
 
     console.log("data", data);
+
     return data;
   } catch (err) {
     console.log("err", err);
@@ -67,6 +75,7 @@ const rmvPost = async (id) => {
       },
       method: "DELETE",
     });
+
     const data = await response.json();
 
     console.log("data", data);
