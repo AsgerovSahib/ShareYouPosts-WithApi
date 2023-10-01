@@ -1,5 +1,4 @@
 console.log("getPosts", getPosts);
-
 let fullname;
 let avatar;
 
@@ -31,9 +30,9 @@ async function renderPosts() {
       return `
     <div class="card shadow">
     <img
-      src="https://media.sproutsocial.com/uploads/2017/01/Instagram-Post-Ideas.png"
+      src="${backimage}"
       class="card-img-top"
-      style="object-fit: cover"
+      style=""
       height="300"
       alt="${post.title}"
     />
